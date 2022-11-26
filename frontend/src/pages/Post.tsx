@@ -6,6 +6,7 @@ import { Post as PostType } from "../dto/create-post.dto";
 import { AuthContext } from "../context/authContext";
 import { getPost, deletePost, getUsers } from "../api/Api";
 import { User } from "../dto/create-user.dto";
+import Parser from "html-react-parser";
 
 const Post: React.FC = () => {
   const [post, setPost] = useState<PostType>({
@@ -13,11 +14,11 @@ const Post: React.FC = () => {
     desc: "",
     img: "",
     cat: "",
-    createdAt: "",
-    _id: "",
-    uid: "",
+    // createdAt: "",
+    // _id: "",
+    // uid: "",
   });
-  const { currentUser, config } = useContext(AuthContext);
+  const { config, user } = useContext(AuthContext);
   const [users, setUsers] = useState<User[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,11 +28,10 @@ const Post: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getPost(postId);
+        const postResponse = await getPost(postId);
         const usersResponse = await getUsers();
         setUsers(usersResponse.data.usersData);
-        setPost(res.data.existingPost);
-        // console.log(post, res.data.existingPost);
+        setPost(postResponse.data.existingPost);
       } catch (error) {
         console.log(error);
       }
@@ -50,8 +50,6 @@ const Post: React.FC = () => {
 
   const findPostUser = (post: PostType) => {
     var username;
-    console.log(post);
-
     users.forEach((user: any) => {
       if (post.uid === user._id) {
         username = user.username;
@@ -66,22 +64,15 @@ const Post: React.FC = () => {
       <div className="single_content">
         <img
           className="single_content_img"
-          src={`../uploads/${post.img}`}
-          alt="img-img"
+          src={`../../public/uploads/1668852212323-402274924.png`} // to fix bug
+          alt="img"
         />
         <div className="single_user">
-          {post.img && (
-            <img
-              className="single_user_img"
-              src={`../uploads/${post.img}`}
-              alt="img"
-            />
-          )}
           <div className="single_user_info">
             <span className="single_user_name">{findPostUser(post)}</span>
             <p className="single_user_created_at">Posted {post.createdAt}</p>
           </div>
-          {currentUser?.username === findPostUser(post) && (
+          {user === findPostUser(post) && (
             <div className="single_user_edit">
               <Link to={`/posts/write?edit=2`} state={post}>
                 <img className="single_user_edit_img" src={Edit} alt="img" />
@@ -96,7 +87,7 @@ const Post: React.FC = () => {
           )}
         </div>
         <h1 className="single_content_title">{post.title}</h1>
-        <p className="single_content_desc">{post.desc}</p>
+        <div className="single_content_desc">{Parser(post.desc)}</div>
       </div>
     </div>
   );
