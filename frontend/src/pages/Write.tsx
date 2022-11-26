@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import { updatePost, createPost, upload } from "../api/Api";
 import Menu from "../components/Menu";
+import { AuthContext } from "../context/authContext";
 import "react-quill/dist/quill.snow.css";
 
 const Write: React.FC = () => {
@@ -11,6 +12,7 @@ const Write: React.FC = () => {
   const [title, setTitle] = useState<string>(state?.title || "");
   const [file, setFile] = useState<any>(null);
   const [cat, setCat] = useState<string>(state?.cat || "");
+  const { config } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,22 +22,29 @@ const Write: React.FC = () => {
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const imgUrl = await upload(file);
+    const imgUrl = await upload(file, config);
 
     try {
       state
-        ? await updatePost(state.id, {
-            title,
-            desc: value,
-            cat,
-            img: file ? imgUrl : "",
-          })
-        : await createPost({
-            title,
-            desc: value,
-            img: file ? imgUrl : "",
-            cat,
-          });
+        ? await updatePost(
+            state.id,
+            {
+              title,
+              desc: value,
+              cat,
+              img: file ? imgUrl : "",
+            },
+            config
+          )
+        : await createPost(
+            {
+              title,
+              desc: value,
+              img: file ? imgUrl : "",
+              cat,
+            },
+            config
+          );
       navigate("/");
     } catch (error) {
       console.log(error);

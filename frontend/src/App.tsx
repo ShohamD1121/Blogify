@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Main from "./pages/Main";
+import Post from "./pages/Post";
 import Posts from "./pages/Posts";
 import Register from "./pages/Register";
 import Write from "./pages/Write";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Posts />,
+      },
+      {
+        path: "/posts/post/:id",
+        element: <Post />,
       },
       {
         path: "/posts/write",

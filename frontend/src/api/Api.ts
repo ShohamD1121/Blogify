@@ -14,52 +14,62 @@ export const API_ENDPOINTS = {
   POST: `${API_URL}/posts`,
 };
 
-const config = {
-  headers: {
-    Authorization:
-      "Bearer " +
-      JSON.parse(localStorage.getItem("user") as string)?.access_token,
-  },
+const createConfig = (config: string) => {
+  const configObj = {
+    headers: {
+      Authorization: "Bearer " + config,
+    },
+  };
+
+  return configObj;
 };
 
-export const signUp = async (inputs: signUpUser) => {
+export const signUp = async (inputs: signUpUser, conf: string) => {
+  const config = createConfig(conf);
   const res = await axios.post(API_ENDPOINTS.REGISTER, inputs, config);
   return res;
 };
 
-export const signIn = async (inputs: signInUser) => {
+export const signIn = async (inputs: signInUser, conf: string) => {
+  const config = createConfig(conf);
   const res = await axios.post(API_ENDPOINTS.LOGIN, inputs, config);
   return res;
 };
 
-export const createPost = async (post: Post) => {
-  console.log(post);
-
+export const createPost = async (post: Post, conf: string) => {
+  const config = createConfig(conf);
   const res = await axios.post(API_ENDPOINTS.POST, post, config);
   return res;
 };
 
-export const updatePost = async (postId: string, post: object) => {
+export const updatePost = async (
+  postId: string,
+  post: object,
+  conf: string
+) => {
+  const config = createConfig(conf);
   const res = await axios.put(`${API_ENDPOINTS.POST}/${postId}`, post, config);
   return res;
 };
 
 export const getPosts = (cat?: string) => {
-  const res = axios.get(`${API_ENDPOINTS.POST}/${cat}`, config);
+  const res = axios.get(`${API_ENDPOINTS.POST}/${cat}`);
   return res;
 };
 
 export const getPost = async (postId: string) => {
-  const res = await axios.get(`${API_ENDPOINTS.POST}/${postId}`, config);
+  const res = await axios.get(`${API_ENDPOINTS.POST}/post/${postId}`);
   return res;
 };
 
-export const deletePost = async (postId: string) => {
+export const deletePost = async (postId: string, conf: string) => {
+  const config = createConfig(conf);
   const res = await axios.delete(`${API_ENDPOINTS.POST}/${postId}`, config);
   return res;
 };
 
-export const upload = async (file: File) => {
+export const upload = async (file: File, conf: string) => {
+  const config = createConfig(conf);
   try {
     const formData = new FormData();
     formData.append("file", file);
@@ -75,6 +85,6 @@ export const upload = async (file: File) => {
 };
 
 export const getUsers = async () => {
-  const res = await axios.get(`${API_URL}/users`, config);
+  const res = await axios.get(`${API_URL}/users`);
   return res;
 };

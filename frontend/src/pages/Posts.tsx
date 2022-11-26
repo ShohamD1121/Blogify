@@ -11,7 +11,6 @@ const Posts: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const cat = useLocation().search.split("=")[1];
 
   useEffect(() => {
@@ -70,9 +69,11 @@ const Posts: React.FC = () => {
                       Posted at {post.createdAt} by {findPostUser(post)}
                     </h3>
                     <div className="text-[14px]">{Parser(post.desc)}</div>
-                    <button className="w-max py-2.5 px-5 cursor-pointer rounded bg-white text-red-400 border-[1px] border-solid border-red-400 hover:border-white hover:bg-lightRed hover:text-white">
-                      Read More
-                    </button>
+                    <Link to={`/posts/post/${post._id}`}>
+                      <button className="w-max py-2.5 px-5 cursor-pointer rounded bg-white text-red-400 border-[1px] border-solid border-red-400 hover:border-white hover:bg-lightRed hover:text-white">
+                        Read More
+                      </button>
+                    </Link>
                   </div>
                 </div>
               );

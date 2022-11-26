@@ -107,8 +107,8 @@ export class PostsController {
     }
   }
 
-  @Get('/:id')
-  async getPost(@Res() response, @Param('id') postId: string) {
+  @Get('/post/:id')
+  async getPost(@Param('id') postId: string, @Res() response) {
     try {
       const existingPost = await this.postsService.getPost(postId);
       return response.status(HttpStatus.OK).json({

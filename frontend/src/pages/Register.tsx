@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { User } from "../dto/create-user.dto";
-import { API_ENDPOINTS } from "../api/Api";
+import { signUp } from "../api/Api";
+import { AuthContext } from "../context/authContext";
 
 const Register: React.FC = () => {
   const [err, setError] = useState<boolean | null>(null);
@@ -12,6 +12,7 @@ const Register: React.FC = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const { config } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -20,7 +21,7 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      await axios.post(API_ENDPOINTS.REGISTER, inputs);
+      await signUp(inputs, config);
       navigate("/login");
     } catch (err: any) {
       setError(err.message);
