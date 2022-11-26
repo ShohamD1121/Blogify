@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes, Types } from 'mongoose';
 
 const formatDate = (date: Date) => {
-  console.log(typeof date);
   let formattedDate =
     date.getDate() +
     '-' +
@@ -13,8 +12,6 @@ const formatDate = (date: Date) => {
     date.getHours() +
     ':' +
     date.getMinutes();
-  console.log(typeof formattedDate);
-
   return formattedDate;
 };
 

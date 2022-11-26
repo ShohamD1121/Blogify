@@ -7,6 +7,7 @@ import { AuthContext } from "../context/authContext";
 import { getPost, deletePost, getUsers } from "../api/Api";
 import { User } from "../dto/create-user.dto";
 import Parser from "html-react-parser";
+import Loader from "../components/Loader";
 
 const Post: React.FC = () => {
   const [post, setPost] = useState<PostType>({
@@ -14,12 +15,10 @@ const Post: React.FC = () => {
     desc: "",
     img: "",
     cat: "",
-    // createdAt: "",
-    // _id: "",
-    // uid: "",
   });
-  const { config, user } = useContext(AuthContext);
   const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { config, user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -28,11 +27,14 @@ const Post: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const postResponse = await getPost(postId);
         const usersResponse = await getUsers();
+        setIsLoading(false);
         setUsers(usersResponse.data.usersData);
         setPost(postResponse.data.existingPost);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     };
@@ -60,34 +62,46 @@ const Post: React.FC = () => {
   };
 
   return (
-    <div className="single">
-      <div className="single_content">
-        <img
-          className="single_content_img"
-          src={`../../public/uploads/1668852212323-402274924.png`} // to fix bug
-          alt="img"
-        />
-        <div className="single_user">
-          <div className="single_user_info">
-            <span className="single_user_name">{findPostUser(post)}</span>
-            <p className="single_user_created_at">Posted {post.createdAt}</p>
-          </div>
-          {user === findPostUser(post) && (
-            <div className="single_user_edit">
-              <Link to={`/posts/write?edit=2`} state={post}>
-                <img className="single_user_edit_img" src={Edit} alt="img" />
-              </Link>
+    <div className="flex justify-center items-center min-h-[calc(100vh-72px-76px)]">
+      <div className="flex p-16 min-w-[75%]">
+        {isLoading ? <Loader /> : null}
+        {!isLoading ? (
+          <div className="flex">
+            <div className="flex flex-col w-1/2 justify-between">
+              <div className="flex flex-col gap-3">
+                <h1 className="text-[48px]">{post.title}</h1>
+                <p className="text-[12px] text-gray-400">
+                  Posted at {post.createdAt} by {findPostUser(post)}
+                </p>
+                <div className="text-[14px]">{Parser(post.desc)}</div>
+              </div>
+              {user === findPostUser(post) && (
+                <div className="flex gap-2">
+                  <Link to={`/posts/write?edit=2`} state={post}>
+                    <img
+                      className="w-[30px] h-[30px] cursor-pointer;"
+                      src={Edit}
+                      alt="img"
+                    />
+                  </Link>
+                  <img
+                    onClick={handleDelete}
+                    className="w-[30px] h-[30px] cursor-pointer;"
+                    src={Delete}
+                    alt="img"
+                  />
+                </div>
+              )}
+            </div>
+            <div className="flex justify-center items-center w-1/2 ">
               <img
-                onClick={handleDelete}
-                className="single_user_edit_img"
-                src={Delete}
+                className="w-3/4 h-3/4 object-contain"
+                src={`../../uploads/${post.img}`}
                 alt="img"
               />
             </div>
-          )}
-        </div>
-        <h1 className="single_content_title">{post.title}</h1>
-        <div className="single_content_desc">{Parser(post.desc)}</div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

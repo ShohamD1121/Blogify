@@ -22,17 +22,17 @@ const Write: React.FC = () => {
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const imgUrl = await upload(file, config);
+    const imgUrl = file ? await upload(file, config) : "";
 
     try {
       state
         ? await updatePost(
-            state.id,
+            state._id,
             {
               title,
               desc: value,
               cat,
-              img: file ? imgUrl : "",
+              img: file ? imgUrl : state.img,
             },
             config
           )

@@ -43,8 +43,6 @@ export class PostsController {
         newPost,
       });
     } catch (error) {
-      console.log('ad');
-
       return response.status(error.status).json(error.response);
     }
   }
@@ -77,8 +75,6 @@ export class PostsController {
     @Param('id') postId: string,
     @Body() updatePost: UpdatePostDto,
   ) {
-    console.log('hello');
-
     try {
       const existingPost = await this.postsService.updatePost(
         postId,

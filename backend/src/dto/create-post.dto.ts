@@ -11,7 +11,6 @@ export class CreatePostDto {
   readonly desc: string;
 
   @IsString()
-  // @IsNotEmpty()
   readonly img: string;
 
   readonly createdAt: string;
