@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Parser from "html-react-parser";
 import Edit from "../images/edit.png";
 import Delete from "../images/delete.png";
 import { Post as PostType } from "../dto/create-post.dto";
 import { AuthContext } from "../context/authContext";
 import { getPost, deletePost, getUsers } from "../api/Api";
 import { User } from "../dto/create-user.dto";
-import Parser from "html-react-parser";
 import Loader from "../components/Loader";
 
 const Post: React.FC = () => {
