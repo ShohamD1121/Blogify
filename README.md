@@ -14,41 +14,37 @@ Blogify is a full stack web application that allows users to sign up, login, rea
 ## Installation
 To run Blogify locally on your machine, follow these steps:
 
-Clone the repository:
+1. Clone the repository:
 
-bash
 Copy code
-git clone https://github.com/your-username/blogify.git
-Navigate to the project directory:
+git clone [https://github.com/your-username/blogify.git](https://github.com/ShohamD1121/Blogify.git)
 
-bash
-Copy code
+2. Navigate to the project directory:
+
 cd blogify
-Install the dependencies for the frontend:
 
-bash
-Copy code
+3. Install the dependencies for the frontend:
+
 cd frontend
 npm install
-Install the dependencies for the backend:
 
-bash
-Copy code
+3. Install the dependencies for the backend:
+
 cd ../backend
 npm install
-Set up the environment variables:
+
+4. Set up the environment variables:
 
 Create a .env file in the backend directory.
 Define the necessary environment variables such as database connection details, JWT secret, etc.
-Start the backend server:
+Start the backend server.
 
-arduino
-Copy code
+5. Run the backend
+
 npm run start:dev
-Start the frontend development server:
 
-sql
-Copy code
+6. Run the frontend 
+
 npm start
 
 Open your web browser and access http://localhost:3000 to view the Blogify application.
