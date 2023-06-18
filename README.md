@@ -26,24 +26,26 @@ cd blogify
 3. Install the dependencies for the frontend:
 
 cd frontend
+
 npm install
 
-3. Install the dependencies for the backend:
+4. Install the dependencies for the backend:
 
 cd ../backend
+
 npm install
 
-4. Set up the environment variables:
+5. Set up the environment variables:
 
 Create a .env file in the backend directory.
 Define the necessary environment variables such as database connection details, JWT secret, etc.
 Start the backend server.
 
-5. Run the backend
+6. Run the backend
 
 npm run start:dev
 
-6. Run the frontend 
+7. Run the frontend 
 
 npm start
 
