@@ -11,7 +11,17 @@ Blogify is a full stack web application that allows users to sign up, login, rea
 
 - Backend Technologies: The backend of Blogify is developed with NestJS, a progressive Node.js framework, and MongoDB, a popular NoSQL database. NestJS enables efficient and scalable server-side development, while MongoDB stores and manages the data.
 
+
+
+
 ## Installation
+
+![Blogify](https://github.com/ShohamD1121/Blogify/assets/96658699/51b4bfe9-8dc9-4472-97de-0266de0fcc55)
+
+![BlogifyBlog](https://github.com/ShohamD1121/Blogify/assets/96658699/54218514-337b-42af-832b-9d55377e7e38)
+
+![BlogifyWrite](https://github.com/ShohamD1121/Blogify/assets/96658699/09098c68-3147-4511-bc5b-885c0e4f34f2)
+
 To run Blogify locally on your machine, follow these steps:
 
 1. Clone the repository:
